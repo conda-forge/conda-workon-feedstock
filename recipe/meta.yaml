@@ -1,7 +1,7 @@
 {%set name = "conda-workon" %}
-{%set version = "0.3.0" %}
+{%set version = "0.4.0" %}
 {%set hash_type = "sha256" %}
-{%set hash_val = "af1ee8f744c5379afa0c2b8c4156a2c0bb282fe6461cc2b087c2b789c8bb90d3" %}
+{%set hash_val = "0f94909c703f2fa39c1f4830808205ba8f1303960bfb85687bd5fb7cc0580e1f" %}
 
 package:
   name: {{ name }}
@@ -14,7 +14,8 @@ source:
 
 build:
   entry_points:
-    - conda-workon = conda_workon:main
+    - conda-workon = conda_workon:main_workon
+    - conda-worktmp = conda_workon:main_tmp
 
   number: 0
   script: python setup.py install --single-version-externally-managed --record=record.txt
@@ -36,6 +37,8 @@ test:
   commands:
     - conda workon --help
     - conda-workon --help
+    - conda worktmp --help
+    - conda-worktmp --help
 
 about:
   home: https://bitbucket.org/flub/conda-workon
