@@ -37,6 +37,8 @@ test:
   commands:
     - conda workon --help
     - conda-workon --help
+    - conda worktmp --help
+    - conda-worktmp --help
 
 about:
   home: https://bitbucket.org/flub/conda-workon
