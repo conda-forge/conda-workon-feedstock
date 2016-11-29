@@ -14,7 +14,8 @@ source:
 
 build:
   entry_points:
-    - conda-workon = conda_workon:main
+    - conda-workon = conda_workon:main_workon
+    - conda-worktmp = conda_workon:main_tmp
 
   number: 0
   script: python setup.py install --single-version-externally-managed --record=record.txt
