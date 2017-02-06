@@ -1,20 +1,23 @@
 {%set name = "conda-workon" %}
-{%set version = "0.3.0" %}
+{%set version = "0.4.0" %}
+{%set compress_type = "tar.gz" %}
 {%set hash_type = "sha256" %}
-{%set hash_val = "af1ee8f744c5379afa0c2b8c4156a2c0bb282fe6461cc2b087c2b789c8bb90d3" %}
+{%set hash_val = "0f94909c703f2fa39c1f4830808205ba8f1303960bfb85687bd5fb7cc0580e1f" %}
+{%set build_num = "0" %}
 
 package:
-  name: {{ name }}
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  fn: {{ name }}-{{ version }}.{{ compress_type }}
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ compress_type }}
   {{ hash_type }}: {{ hash_val }}
 
 build:
   entry_points:
-    - conda-workon = conda_workon:main
+    - conda-workon = conda_workon:main_workon
+    - conda-worktmp = conda_workon:main_tmp
 
   number: 0
   script: python setup.py install --single-version-externally-managed --record=record.txt
@@ -28,18 +31,19 @@ requirements:
   run:
     - python
     - conda
+    - pyyaml
 
 test:
-  imports:
-    - conda_workon
-
   commands:
     - conda workon --help
     - conda-workon --help
+    - conda worktmp --help
+    - conda-worktmp --help
 
 about:
   home: https://bitbucket.org/flub/conda-workon
   license: BSD 3-Clause
+  license_family: BSD
   summary: 'Activate conda environments in subshells'
 
 extra:
