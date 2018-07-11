@@ -1,9 +1,8 @@
-{%set name = "conda-workon" %}
-{%set version = "0.4.0" %}
-{%set compress_type = "tar.gz" %}
-{%set hash_type = "sha256" %}
-{%set hash_val = "0f94909c703f2fa39c1f4830808205ba8f1303960bfb85687bd5fb7cc0580e1f" %}
-{%set build_num = "0" %}
+{% set name = "conda-workon" %}
+{% set version = "0.4.0" %}
+{% set compress_type = "tar.gz" %}
+{% set hash_type = "sha256" %}
+{% set hash_val = "0f94909c703f2fa39c1f4830808205ba8f1303960bfb85687bd5fb7cc0580e1f" %}
 
 package:
   name: {{ name|lower }}
@@ -11,26 +10,27 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.{{ compress_type }}
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ compress_type }}
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ compress_type }}
   {{ hash_type }}: {{ hash_val }}
 
 build:
+  noarch: python
   entry_points:
     - conda-workon = conda_workon:main_workon
     - conda-worktmp = conda_workon:main_tmp
 
-  number: 0
-  script: python setup.py install --single-version-externally-managed --record=record.txt
+  number: 1
+  script: python -m pip install --no-deps --ignore-installed .
 
 requirements:
-  build:
+  host:
     - python
-    - setuptools
-    - conda
+    - pip
+    - conda <4.4
 
   run:
     - python
-    - conda
+    - conda <4.4
     - pyyaml
 
 test:
